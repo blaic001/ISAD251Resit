@@ -15,26 +15,38 @@
     <div class="container" style="text-align: center">
         <div class="row">
             <div class="col-sm-12">
-                <h1>Enter Your Mood (1 Sad - 5 Happy)</h1>
+                <h1>Child</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-
-                <input name="moodData" value="" type="text">
-                <p style="color: red"></p>
+                <h2>As a child I wish to enter details of deadlines I need to meet</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <input name="dateMood" value="" type="date">
-                <p style="color: red">  </p>
+                <h2>As a child I wish to see what deadlines I have coming up</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>As a child I wish to amend my deadline to show that I have met it</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>As a child I wish to amend my deadline to move it</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>As a child I wish to delete my deadline</h2>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-sm-12">
-                <input name="backButton" value="Back" type="button">
+                <input name="backButton" value="Back" type="button" onclick="goBack()">
             </div>
         </div>
 
@@ -47,6 +59,12 @@
 
 </body>
 
+
+<script language="javascript">
+    function goBack(){
+        location.href="index.php";
+    }
+</script>
 
 
 </html>

@@ -11,14 +11,12 @@
 <div class="container" style="text-align: center">
     <div class="row">
         <div class="col-sm-12">
-            <button id="link" value="Child" onclick="goToChildView()">
+            <input type="button" name="linkChild" value="Child" onclick="goToChildView()">
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
-
-            <input name="moodData" value="" type="text">
-            <p style="color: red"></p>
+            <input type="button" name="moodData" value="Parent" onclick="goToParentView()">
         </div>
     </div>
 </div>
