@@ -1,4 +1,38 @@
-<?php ?>
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . '/model/dbFunctions.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/userData.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/deadlineData.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/appointmentData.php';
+
+$user = getUser("John");
+
+$paraOutputAppColour= "black";
+
+if (isset($_POST['inputButton1'])){
+    $appDate = $_POST['appDT'];
+    $appDesc = $_POST['appDesc'];
+    $appNotes = $_POST['appNotes'];
+
+    if (empty($_POST['appDT'])){
+        $appDateError = "Please enter a correct date.";
+    }
+
+    elseif (empty($_POST['appDesc'])) {
+        $appDescError = "Please enter a correct description.";
+    }
+
+    elseif (empty($_POST['appNotes'])){
+        $appNotesError = "Please enter valid notes.";
+    }
+
+    else{
+        setAppointmentData($user->getUserId(), $appDate, $appDesc, $appNotes);
+
+        $paraOutputApp = "Appointment Successfully Updated";
+    }
+}
+
+?>
 
 <html lang="en">
 <head>
@@ -17,7 +51,16 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
+                $appId, $userId, $appDT, $appNotes, $appDesc
                 <h2>As a parent I wish to add details of dentist appointments for all in my family</h2>
+                <input name="appDT" value="" type="date">
+                <p style="color: red"> <?php echo $appDateError;?> </p>
+                <input name="appDesc" value="" type="text">
+                <p style="color: red"> <?php echo $appDescError;?> </p>
+                <input name="appNotes" value="" type="text">
+                <p style="color: red"> <?php echo $appNotesError;?> </p>
+                <input name="inputButton1" value="Input" type="submit" onclick="inputData_onClick">
+                <p style="color: <?php echo $paraOutputAppColour; ?>" > <?php echo $paraOutputApp;?> </p>
             </div>
         </div>
         <div class="row">

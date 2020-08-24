@@ -1,9 +1,9 @@
 <?php
 
-const DB_SERVER = "";
-const DB_USER = "";
-const DB_PASSWORD = "";
-const DB_DATABASE = "";
+const DB_SERVER = "socem1.uopnet.plymouth.ac.uk";
+const DB_USER = "CBlairRains";
+const DB_PASSWORD = "ISAD251_22205293";
+const DB_DATABASE = "ISAD251_CBlair Rains";
 
 function getConnect(){
     $dataSourceName = "mysql:dbname=" . DB_DATABASE . ";host=" . DB_SERVER;
@@ -18,9 +18,8 @@ function getConnect(){
 }
 
 function getUser($firstName){
-    $userData = getUserData($firstName);
-
     $userId = getUserId($firstName);
+    $userData = getUserData($userId);
     $appointmentData = getAppointmentData($userId);
     $deadlineData = getDeadlineData($userId);
 
@@ -68,7 +67,7 @@ function buildUser($userData, $appointmentData, $deadlineData){
 
 }
 
-function getUserData($firstName){
+function getUserId($firstName){
     $statement = getConnect()->prepare("CALL GetUserId('" . $firstName . "')");
     $statement->execute();
     $data = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -79,4 +78,61 @@ function getUserData($firstName){
     }
 
     return 1;
+}
+
+function getUserData($userId){
+    $statement = getConnect()->prepare("CALL GetUserData('" . $userId . "')");
+
+
+    $statement->execute();
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+    return $data;
+}
+
+function getAppointmentData($userId){
+    $statement = getConnect()->prepare("CALL GetAppointmentData('" . $userId . "')");
+    $statement->execute();
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+}
+
+function getDeadlineData($userId){
+    $statement = getConnect()->prepare("CALL GetDeadlineData('" . $userId . "')");
+    $statement->execute();
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+}
+
+function setAppointmentData($userId, $appDT, $appNotes, $appDesc){
+    $statement = getConnect()->prepare("CALL SetAppointmentData('" . $userId . "', '" . $appDT . "', '" . $appNotes . "', '" . $appDesc . "')");
+    $statement->execute();
+}
+
+function setDeadlineData($deadlineId, $userId, $deadlineDT, $deadlineDesc, $deadlineCheck){
+    $statement = getConnect()->prepare("CALL SetAppointmentData('" . $deadlineId . "', '" . $userId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
+    $statement->execute();
+}
+
+function deleteAppointmentData($appId){
+    $statement = getConnect()->prepare("CALL DeleteAppointmentData('" . $appId . "')");
+    $statement->execute();
+}
+
+function deleteDeadlineData($deadlineId){
+    $statement = getConnect()->prepare("CALL DeleteDeadlineData('" . $deadlineId . "')");
+    $statement->execute();
+}
+
+function updateAppointmentData($appId, $userId, $appDT, $appNotes, $appDesc){
+    $statement = getConnect()->prepare("CALL UpdateAppointmentData('" . $appId . "', '" . $userId . "', '" . $appDT . "', '" . $appNotes . "', '" . $appDesc . "')");
+    $statement->execute();
+}
+
+function updateDeadlineData($deadlineId, $userId, $deadlineDT, $deadlineDesc, $deadlineCheck){
+    $statement = getConnect()->prepare("CALL UpdateAppointmentData('" . $deadlineId . "', '" . $userId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
+    $statement->execute();
 }
