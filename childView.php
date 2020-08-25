@@ -1,4 +1,45 @@
-<?php ?>
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . '/model/dbFunctions.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/userData.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/deadlineData.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/appointmentData.php';
+
+$user = getUser(2);
+
+$deadlineArray = ($user->getDeadlineDataArray());
+
+$deadlineDateError = "";
+$deadlineDescError = "";
+$deadlineNotesError= "";
+$paraOutputDeadline= "";
+$paraOutputDeadlineColour= "black";
+
+if (isset($_POST['inputButton1'])){
+    $userId = $user->getUserId();
+    $deadlineDT = $_POST['deadlineDT'];
+    $deadlineDesc = $_POST['deadlineDesc'];
+    $deadlineCheck = $_POST['deadlineCheck'];
+
+    if (empty($_POST['deadlineDT'])){
+        $deadlineDateError = "Please enter a correct date.";
+    }
+
+    elseif (empty($_POST['deadlineDesc'])) {
+        $deadlineDescError = "Please enter a correct description.";
+    }
+
+    elseif (empty($_POST['deadlineCheck'])){
+        $deadlineNotesError = "Please enter valid notes.";
+    }
+
+    else{
+        setDeadlineData($userId, $deadlineDT, $deadlineDesc, $deadlineCheck);
+
+        $paraOutputDeadline = "Appointment Successfully Added";
+    }
+}
+
+?>
 
 
 <html lang="en">
@@ -21,6 +62,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <h2>As a child I wish to enter details of deadlines I need to meet</h2>
+                <input name="deadlineDT" value="" type="datetime-local">
+                <p style="color: red"> <?php echo $deadlineDateError;?> </p>
+                <input name="deadlineDesc" value="" type="text">
+                <p style="color: red"> <?php echo $deadlineDescError;?> </p>
+                <input name="deadlineCheck" value="" type="text">
+                <p style="color: red"> <?php echo $deadlineNotesError;?> </p>
+                <input name="inputButton1" value="Input" type="submit">
+                <p style="color: <?php echo $paraOutputDeadlineColour; ?>" > <?php echo $paraOutputDeadline;?> </p>
             </div>
         </div>
         <div class="row">

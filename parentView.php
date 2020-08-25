@@ -4,11 +4,29 @@ include $_SERVER['DOCUMENT_ROOT'] . '/model/userData.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/model/deadlineData.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/model/appointmentData.php';
 
-$user = getUser("John");
+
+
+$user1 = getUser(1);
+$user2 = getUser(2);
+
+$appointmentArray1 = ($user1->getAppointmentDataArray());
+$appointmentArray2 = ($user2->getAppointmentDataArray());
+
+$appDateError = "";
+$appDescError = "";
+$appNotesError= "";
+$paraOutputApp= "";
+$appDTShow = "";
+$appDescShow= "";
+$appNotesShow ="";
+$userIdShow="";
+$noDataError="";
+$appIdShow="";
 
 $paraOutputAppColour= "black";
 
 if (isset($_POST['inputButton1'])){
+    $userId = $_POST['userId'];
     $appDate = $_POST['appDT'];
     $appDesc = $_POST['appDesc'];
     $appNotes = $_POST['appNotes'];
@@ -26,10 +44,64 @@ if (isset($_POST['inputButton1'])){
     }
 
     else{
-        setAppointmentData($user->getUserId(), $appDate, $appDesc, $appNotes);
+        setAppointmentData($userId, $appDate, $appDesc, $appNotes);
 
-        $paraOutputApp = "Appointment Successfully Updated";
+        $paraOutputApp = "Appointment Successfully Added";
     }
+}
+
+if (isset($_POST['inputButton2'])){
+    $userId = $_POST['userId2'];
+    $appId = $_POST['appId'];
+    if ($userId == "1"){
+        $chosenArray = ($user1->getAppointmentDataArray());
+        $userIdShow="1";
+    }
+    elseif ($userId == "2"){
+        $chosenArray = ($user2->getAppointmentDataArray());
+        $userIdShow="2";
+    }
+    if ($appId <= (count($chosenArray))) {
+        $appDTShow = $chosenArray[$appId]->getAppDT();
+        $appNotesShow = $chosenArray[$appId]->getAppNotes();
+        $appDescShow = $chosenArray[$appId]->getAppDesc();
+    }
+    if ($appId > (count($chosenArray))) {
+        $noDataError = "No Data Found";
+    }
+    $appIdShow = $appId;
+
+}
+
+if (isset($_POST['inputButton3'])){
+    $userId = $_POST['userId2'];
+    $appId = $_POST['appId'];
+    $appDT = $_POST['appDT2'];
+    $appNotes = $_POST['appNotes2'];
+    $appDesc = $_POST['appDesc2'];
+    $appId = $appId + 1;
+
+    if ($userId == 1){
+        $appId = $appointmentArray1[$appId]->getAppId();
+    }
+
+    if ($userId == 2){
+        $appId = $appointmentArray2[$appId]->getAppId();
+    }
+
+
+    var_dump($appId);
+    var_dump($appDT);
+    var_dump($appNotes);
+    var_dump($appDesc);
+
+    updateAppointmentData($appId, $appDT, $appNotes, $appDesc);
+}
+
+if (isset($_POST['inputButton4'])){
+    $appId = $_POST['appId'];
+    var_dump($appId);
+    deleteAppointmentData($appId);
 }
 
 ?>
@@ -51,9 +123,11 @@ if (isset($_POST['inputButton1'])){
         </div>
         <div class="row">
             <div class="col-sm-12">
-                $appId, $userId, $appDT, $appNotes, $appDesc
-                <h2>As a parent I wish to add details of dentist appointments for all in my family</h2>
-                <input name="appDT" value="" type="date">
+                <h2>Add details of dentist appointments for all</h2>
+                <label>Choose a Person Id: (1-2)</label>
+                <input name="userId" value="" type="text">
+
+                <input name="appDT" value="" type="datetime-local">
                 <p style="color: red"> <?php echo $appDateError;?> </p>
                 <input name="appDesc" value="" type="text">
                 <p style="color: red"> <?php echo $appDescError;?> </p>
@@ -66,21 +140,26 @@ if (isset($_POST['inputButton1'])){
         <div class="row">
             <div class="col-sm-12">
                 <h2>As a parent I wish to see details of upcoming appointments for all in my family</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a parent I wish to change the details of any appointments for all in my family </h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a parent I wish to add notes to an appointment that has taken place</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a parent I wish to cancel appointments for any in my family</h2>
+                Enter User Id
+                <br>
+                <input name="userId2" value ="<?php echo $userIdShow?>" type="text">
+                <br>
+                Enter Appointment Number
+                <br>
+                <input name="appId" value="<?php echo $appIdShow; ?>" type="text">
+                <br>
+                <input name="inputButton2" value="Search" type="submit">
+                <br>
+                <input name="appDT2" value="<?php echo $appDTShow; ?>" type="text">
+                <br>
+                <input name="appDesc2" value="<?php echo $appDescShow; ?>" type="text">
+                <br>
+                <input name="appNotes2" value="<?php echo $appNotesShow; ?>" type="text">
+                <br>
+                <input name="inputButton3" value="Update" type="submit">
+                <br>
+                <input name="inputButton4" value="Delete" type="submit">
+                <p style="color: red" <?php echo $noDataError; ?>
             </div>
         </div>
         <br>

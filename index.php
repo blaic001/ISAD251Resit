@@ -32,5 +32,5 @@
     function goToParentView(){
         location.href = "parentView.php";
     }
-
+</script>
 </html>
