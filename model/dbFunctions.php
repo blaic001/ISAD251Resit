@@ -128,7 +128,6 @@ function updateAppointmentData($appId, $appDT, $appNotes, $appDesc){
 }
 
 function updateDeadlineData($deadlineId, $deadlineDT, $deadlineDesc, $deadlineCheck){
-    var_dump($deadlineId);
     $statement = getConnect()->prepare("CALL UpdateDeadlineData('" . $deadlineId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
     $statement->execute();
 }

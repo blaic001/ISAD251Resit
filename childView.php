@@ -17,6 +17,8 @@ $deadlineDTShow = "";
 $deadlineDescShow= "";
 $deadlineCheckShow ="";
 $deadlineIdShow="";
+$searchDeadlineError="";
+$updateDelete="";
 
 if (isset($_POST['inputButton1'])){
     $userId = $user->getUserId();
@@ -45,10 +47,15 @@ if (isset($_POST['inputButton1'])){
 
 if (isset($_POST['inputButton2'])){
     $deadlineId = $_POST['deadlineId'];
-    $deadlineIdShow = $deadlineId;
-    $deadlineDTShow = $deadlineArray[$deadlineId]->getDeadlineDT();
-    $deadlineDescShow = $deadlineArray[$deadlineId]->getDeadlineDesc();
-    $deadlineCheckShow = $deadlineArray[$deadlineId]->getDeadlineCheck();
+    if ($deadlineId >= (count($deadlineArray)) or ($deadlineId < 0) or ($deadlineId == null)){
+        $searchDeadlineError = "Enter a valid Id";
+    }
+    else {
+        $deadlineIdShow = $deadlineId;
+        $deadlineDTShow = $deadlineArray[$deadlineId]->getDeadlineDT();
+        $deadlineDescShow = $deadlineArray[$deadlineId]->getDeadlineDesc();
+        $deadlineCheckShow = $deadlineArray[$deadlineId]->getDeadlineCheck();
+    }
 }
 
 if (isset($_POST['inputButton3'])){
@@ -58,18 +65,30 @@ if (isset($_POST['inputButton3'])){
     $deadlineCheck = $_POST['deadlineCheck2'];
     $deadlineId = $deadlineId;
 
+
     $deadlineIdShow = $deadlineId;
     $deadlineDTShow = $deadlineDT;
     $deadlineDescShow = $deadlineDesc;
     $deadlineCheckShow = $deadlineCheck;
     $deadlineId = $deadlineArray[$deadlineId]->getDeadlineId();
     updateDeadlineData($deadlineId, $deadlineDT, $deadlineDesc, $deadlineCheck);
+    $updateDelete = "Data Successfully Updated";
+
 }
 
 if (isset($_POST['inputButton4'])){
     $deadlineId = $_POST['deadlineId'];
-    $deadlineId = $deadlineArray[$deadlineId]->getDeadlineId();
-    deleteDeadlineData($deadlineId);
+
+    if (empty($_POST['deadlineId'])){
+        $updateDelete = "Data Failed to Delete";
+    }
+    else{
+        $deadlineId = $deadlineArray[$deadlineId]->getDeadlineId();
+        deleteDeadlineData($deadlineId);
+        $updateDelete = "Data Successfully Deleted";
+    }
+
+
 }
 
 ?>
@@ -93,46 +112,40 @@ if (isset($_POST['inputButton4'])){
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
-                <h2>As a child I wish to enter details of deadlines I need to meet</h2>
+            <div class="col-sm-6">
+                <h2>Add Deadline</h2>
+                <p>Date</p>
                 <input name="deadlineDT" value="" type="datetime-local">
                 <p style="color: red"> <?php echo $deadlineDateError;?> </p>
+                <p>Description</p>
                 <input name="deadlineDesc" value="" type="text">
                 <p style="color: red"> <?php echo $deadlineDescError;?> </p>
+                <p>Is it complete?</p>
                 <input name="deadlineCheck" value="" type="text">
                 <p style="color: red"> <?php echo $deadlineNotesError;?> </p>
                 <input name="inputButton1" value="Input" type="submit">
                 <p style="color: <?php echo $paraOutputDeadlineColour; ?>" > <?php echo $paraOutputDeadline;?> </p>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a child I wish to see what deadlines I have coming up</h2>
+            <div class="col-sm-6">
+                <h2>Edit, View and Delete Deadlines</h2>
+                <p>Enter Deadline Id (0+)</p>
                 <input name="deadlineId" value="<?php echo $deadlineIdShow;?>" type="text">
+                <br>
                 <input name="inputButton2" value="Search" type="submit">
-                <input name="deadlineDT2" value="<?php echo $deadlineDTShow;?>" type="text">
+                <p style="color: red"><?php echo $searchDeadlineError;?></p>
+                <p>Deadline Date/Time</p>
+                <input name="deadlineDT2" value="<?php echo $deadlineDTShow;?>" type="datetime-local">
+                <p>Deadline Description</p>
                 <input name="deadlineDesc2" value="<?php echo $deadlineDescShow;?>" type="text">
+                <p>Is the deadline finished?</p>
                 <input name="deadlineCheck2" value="<?php echo $deadlineCheckShow;?>" type="text">
+                <br>
                 <input name="inputButton3" value="Update" type="submit">
+                <br>
                 <input name="inputButton4" value="Delete" type="submit">
+                <p><?php echo $updateDelete?></p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a child I wish to amend my deadline to show that I have met it</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a child I wish to amend my deadline to move it</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>As a child I wish to delete my deadline</h2>
-            </div>
-        </div>
-        <br>
         <div class="row">
             <div class="col-sm-12">
                 <input name="backButton" value="Back" type="button" onclick="goBack()">
