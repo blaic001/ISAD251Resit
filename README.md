@@ -6,9 +6,9 @@ Youtube Video Demonstrating Code
 
 Screenshots
 -
-![Image of Index]https://github.com/blaic001/ISAD251Resit/tree/master/Screenshots/index%20page.png
-![Image of Parent]https://github.com/blaic001/ISAD251Resit/tree/master/Screenshots/Parent%20Page.png
-![Image of Child]https://github.com/blaic001/ISAD251Resit/tree/master/Screenshots/child%20page.png
+![Image of Index](https://github.com/blaic001/ISAD251Resit/tree/master/Screenshots/index%20page.png)
+![Image of Parent](https://github.com/blaic001/ISAD251Resit/tree/master/Screenshots/Parent%20Page.png)
+![Image of Child](https://github.com/blaic001/ISAD251Resit/tree/master/Screenshots/child%20page.png)
 
 
 Application Fact Sheet
