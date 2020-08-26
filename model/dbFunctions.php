@@ -71,7 +71,6 @@ function getUserId($firstName){
     $statement = getConnect()->prepare("CALL GetUserId($firstName)");
     $statement->execute();
     $data = $statement->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($data);
 
     return $data;
 }
@@ -109,12 +108,11 @@ function setAppointmentData($userId, $appDT, $appNotes, $appDesc){
 }
 
 function setDeadlineData($userId, $deadlineDT, $deadlineDesc, $deadlineCheck){
-    $statement = getConnect()->prepare("CALL SetAppointmentData('" . $userId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
+    $statement = getConnect()->prepare("CALL SetDeadlineData('" . $userId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
     $statement->execute();
 }
 
 function deleteAppointmentData($appId){
-    echo "help";
     $statement = getConnect()->prepare("CALL DeleteAppointmentData('" . $appId . "')");
     $statement->execute();
 }
@@ -129,7 +127,8 @@ function updateAppointmentData($appId, $appDT, $appNotes, $appDesc){
     $statement->execute();
 }
 
-function updateDeadlineData($deadlineId, $userId, $deadlineDT, $deadlineDesc, $deadlineCheck){
-    $statement = getConnect()->prepare("CALL UpdateAppointmentData('" . $deadlineId . "', '" . $userId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
+function updateDeadlineData($deadlineId, $deadlineDT, $deadlineDesc, $deadlineCheck){
+    var_dump($deadlineId);
+    $statement = getConnect()->prepare("CALL UpdateDeadlineData('" . $deadlineId . "', '" . $deadlineDT . "', '" . $deadlineDesc . "', '" . $deadlineCheck . "')");
     $statement->execute();
 }

@@ -79,7 +79,6 @@ if (isset($_POST['inputButton3'])){
     $appDT = $_POST['appDT2'];
     $appNotes = $_POST['appNotes2'];
     $appDesc = $_POST['appDesc2'];
-    $appId = $appId + 1;
 
     if ($userId == 1){
         $appId = $appointmentArray1[$appId]->getAppId();
@@ -89,18 +88,19 @@ if (isset($_POST['inputButton3'])){
         $appId = $appointmentArray2[$appId]->getAppId();
     }
 
-
-    var_dump($appId);
-    var_dump($appDT);
-    var_dump($appNotes);
-    var_dump($appDesc);
-
     updateAppointmentData($appId, $appDT, $appNotes, $appDesc);
 }
 
 if (isset($_POST['inputButton4'])){
     $appId = $_POST['appId'];
-    var_dump($appId);
+    $userId = $_POST['userId2'];
+    if ($userId == 1){
+        $appId = $appointmentArray1[$appId]->getAppId();
+    }
+
+    if ($userId == 2){
+        $appId = $appointmentArray2[$appId]->getAppId();
+    }
     deleteAppointmentData($appId);
 }
 
@@ -109,7 +109,7 @@ if (isset($_POST['inputButton4'])){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Parent</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
@@ -118,28 +118,31 @@ if (isset($_POST['inputButton4'])){
     <div class="container" style="text-align: center">
         <div class="row">
             <div class="col-sm-12">
-                <h1>Parent</h1>
+                <h1>Parent Interface</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <h2>Add details of dentist appointments for all</h2>
                 <label>Choose a Person Id: (1-2)</label>
                 <input name="userId" value="" type="text">
-
+                <br>
+                <label>Enter the Date:</label>
                 <input name="appDT" value="" type="datetime-local">
-                <p style="color: red"> <?php echo $appDateError;?> </p>
+                <label style="color: red"> <?php echo $appDateError;?> </label>
+                <br>
+                <label>Describe the appointment:</label>
                 <input name="appDesc" value="" type="text">
                 <p style="color: red"> <?php echo $appDescError;?> </p>
+                <br>
+                <label>Any Notes?</label>
                 <input name="appNotes" value="" type="text">
                 <p style="color: red"> <?php echo $appNotesError;?> </p>
-                <input name="inputButton1" value="Input" type="submit" onclick="inputData_onClick">
+                <input name="inputButton1" value="Add" type="submit" onclick="inputData_onClick">
                 <p style="color: <?php echo $paraOutputAppColour; ?>" > <?php echo $paraOutputApp;?> </p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <h2>As a parent I wish to see details of upcoming appointments for all in my family</h2>
                 Enter User Id
                 <br>
                 <input name="userId2" value ="<?php echo $userIdShow?>" type="text">

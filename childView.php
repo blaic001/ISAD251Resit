@@ -13,6 +13,10 @@ $deadlineDescError = "";
 $deadlineNotesError= "";
 $paraOutputDeadline= "";
 $paraOutputDeadlineColour= "black";
+$deadlineDTShow = "";
+$deadlineDescShow= "";
+$deadlineCheckShow ="";
+$deadlineIdShow="";
 
 if (isset($_POST['inputButton1'])){
     $userId = $user->getUserId();
@@ -39,13 +43,42 @@ if (isset($_POST['inputButton1'])){
     }
 }
 
+if (isset($_POST['inputButton2'])){
+    $deadlineId = $_POST['deadlineId'];
+    $deadlineIdShow = $deadlineId;
+    $deadlineDTShow = $deadlineArray[$deadlineId]->getDeadlineDT();
+    $deadlineDescShow = $deadlineArray[$deadlineId]->getDeadlineDesc();
+    $deadlineCheckShow = $deadlineArray[$deadlineId]->getDeadlineCheck();
+}
+
+if (isset($_POST['inputButton3'])){
+    $deadlineId = $_POST['deadlineId'];
+    $deadlineDT = $_POST['deadlineDT2'];
+    $deadlineDesc = $_POST['deadlineDesc2'];
+    $deadlineCheck = $_POST['deadlineCheck2'];
+    $deadlineId = $deadlineId;
+
+    $deadlineIdShow = $deadlineId;
+    $deadlineDTShow = $deadlineDT;
+    $deadlineDescShow = $deadlineDesc;
+    $deadlineCheckShow = $deadlineCheck;
+    $deadlineId = $deadlineArray[$deadlineId]->getDeadlineId();
+    updateDeadlineData($deadlineId, $deadlineDT, $deadlineDesc, $deadlineCheck);
+}
+
+if (isset($_POST['inputButton4'])){
+    $deadlineId = $_POST['deadlineId'];
+    $deadlineId = $deadlineArray[$deadlineId]->getDeadlineId();
+    deleteDeadlineData($deadlineId);
+}
+
 ?>
 
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Child</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
@@ -56,7 +89,7 @@ if (isset($_POST['inputButton1'])){
     <div class="container" style="text-align: center">
         <div class="row">
             <div class="col-sm-12">
-                <h1>Child</h1>
+                <h1>Child Interface</h1>
             </div>
         </div>
         <div class="row">
@@ -75,6 +108,13 @@ if (isset($_POST['inputButton1'])){
         <div class="row">
             <div class="col-sm-12">
                 <h2>As a child I wish to see what deadlines I have coming up</h2>
+                <input name="deadlineId" value="<?php echo $deadlineIdShow;?>" type="text">
+                <input name="inputButton2" value="Search" type="submit">
+                <input name="deadlineDT2" value="<?php echo $deadlineDTShow;?>" type="text">
+                <input name="deadlineDesc2" value="<?php echo $deadlineDescShow;?>" type="text">
+                <input name="deadlineCheck2" value="<?php echo $deadlineCheckShow;?>" type="text">
+                <input name="inputButton3" value="Update" type="submit">
+                <input name="inputButton4" value="Delete" type="submit">
             </div>
         </div>
         <div class="row">
