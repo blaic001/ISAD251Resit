@@ -1,16 +1,16 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/model/dbFunctions.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/model/userData.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/model/deadlineData.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/model/appointmentData.php';
+include 'dbFunctions.php';
+include 'userData.php';
+include 'deadlineData.php';
+include 'appointmentData.php';
 
 
 
-$user1 = getUser(1);
-$user2 = getUser(2);
+$user1 = getUser(1); //gets parent user
+$user2 = getUser(2); //gets child user
 
-$appointmentArray1 = ($user1->getAppointmentDataArray());
-$appointmentArray2 = ($user2->getAppointmentDataArray());
+$appointmentArray1 = ($user1->getAppointmentDataArray()); //gets parent array
+$appointmentArray2 = ($user2->getAppointmentDataArray()); //gets child array
 
 $appDateError = "";
 $appDescError = "";

@@ -1,12 +1,12 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/model/dbFunctions.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/model/userData.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/model/deadlineData.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/model/appointmentData.php';
+include 'dbFunctions.php';
+include 'userData.php';
+include 'deadlineData.php';
+include 'appointmentData.php';
 
-$user = getUser(2);
+$user = getUser(2); //gets user object
 
-$deadlineArray = ($user->getDeadlineDataArray());
+$deadlineArray = ($user->getDeadlineDataArray()); //gets deadlines for user
 
 $deadlineDateError = "";
 $deadlineDescError = "";
@@ -20,7 +20,7 @@ $deadlineIdShow="";
 $searchDeadlineError="";
 $updateDelete="";
 
-if (isset($_POST['inputButton1'])){
+if (isset($_POST['inputButton1'])){ //adds a new deadline
     $userId = $user->getUserId();
     $deadlineDT = $_POST['deadlineDT'];
     $deadlineDesc = $_POST['deadlineDesc'];
@@ -45,7 +45,7 @@ if (isset($_POST['inputButton1'])){
     }
 }
 
-if (isset($_POST['inputButton2'])){
+if (isset($_POST['inputButton2'])){ //searches deadlines for specific deadline
     $deadlineId = $_POST['deadlineId'];
     if ($deadlineId >= (count($deadlineArray)) or ($deadlineId < 0) or ($deadlineId == null)){
         $searchDeadlineError = "Enter a valid Id";
@@ -58,7 +58,7 @@ if (isset($_POST['inputButton2'])){
     }
 }
 
-if (isset($_POST['inputButton3'])){
+if (isset($_POST['inputButton3'])){ //Updates a deadlines data
     $deadlineId = $_POST['deadlineId'];
     $deadlineDT = $_POST['deadlineDT2'];
     $deadlineDesc = $_POST['deadlineDesc2'];
@@ -76,7 +76,7 @@ if (isset($_POST['inputButton3'])){
 
 }
 
-if (isset($_POST['inputButton4'])){
+if (isset($_POST['inputButton4'])){ //Deletes a deadline
     $deadlineId = $_POST['deadlineId'];
 
     if (empty($_POST['deadlineId'])){
